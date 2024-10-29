@@ -1,3 +1,6 @@
+/*
+ * src/main/java/com/ekeberg/spring_rest_api_sql_ai_travel/user/UserNotFoundException.java
+ */
 package com.ekeberg.spring_rest_api_sql_ai_travel.user;
 
 import org.springframework.http.HttpStatus;
