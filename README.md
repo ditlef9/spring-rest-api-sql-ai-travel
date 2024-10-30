@@ -29,7 +29,7 @@ This API includes user authentication and uses PostgreSQL for data persistence.
 
 ## 🚀 Installation on Windows
 
-1 **Java 23 or newer** Download and install<br>
+### 1. Install Java 23 or newer
 Set `JAVA_HOME`:<br>
 System > Advanced system settings > Environment variables > 
 System variables: [New]<br>
@@ -41,12 +41,12 @@ Path > [Edit] > Then add the following on new line:<br>
 `%JAVA_HOME%\bin`
 <br><br>
 
-2. **Setup PostgreSQL**:<br>
+### 2. Setup PostgreSQL
 
 Install PostgreSQL. Username and password is located at `application.properties`.
 
 
-3. **Add a user and interest**
+### 3. Add a user and interest
 
 Start `SpringRestApiSqlAiTravelApplication`. Then you can either run `UserDetailsInserter` which setups 
 some data, or add user and interest manually:<br><br>
