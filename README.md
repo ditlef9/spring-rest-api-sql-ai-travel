@@ -62,6 +62,7 @@ Body:<br>
 ```
 {
     "name": "Liam Beachman",
+    "email": "liam@gmail.com",
     "birthDate": "2020-10-28",
     "password": "someSecurePassword"
 }

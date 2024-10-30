@@ -29,6 +29,10 @@ public class User {
     @JsonProperty("name")
     private String name;
 
+    @Size(min=2, message = "Email should have at least two characters")
+    @JsonProperty("email")
+    private String email;
+
     @Past(message = "Birth Date should be in the past")
     private LocalDate birthDate;
 
@@ -41,9 +45,10 @@ public class User {
     private List<Interest> interest;
 
     // Constructor
-    public User(Integer id, String name, LocalDate birthDate, String password) {
+    public User(Integer id, String name, String email, LocalDate birthDate, String password) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.birthDate = birthDate;
         this.password = password;
     }
@@ -53,6 +58,11 @@ public class User {
     }
 
     public String getName() {
+        return name;
+    }
+
+
+    public String getEmail() {
         return name;
     }
 
@@ -72,6 +82,10 @@ public class User {
         this.name = name;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
@@ -88,12 +102,16 @@ public class User {
     public void setInterest(List<Interest> interest) {
         this.interest = interest;
     }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", birthDate=" + birthDate +
+                ", password='" + password + '\'' +
+                ", interest=" + interest +
                 '}';
     }
 }
