@@ -13,17 +13,17 @@ This API includes user authentication and uses PostgreSQL for data persistence.
 
 ## ✨ Features
 
-- 🔐 **User Registration & Authentication**: Secure user signup and login.
-- 🏖️ **Personalized Travel Recommendations**: Custom travel plans based on user preferences.
-- 💾 **PostgreSQL Database**: Stores user data and travel interests.
-- 🔒 **Secure Endpoints**: Protected with Spring Security for authenticated access.
-- **Java** (Spring Boot) ☕
-- **H2-database** (Database - enabled in application.properties - http://localhost:8080/h2-console - URL: jdbc:h2:mem:testdb) 
-- **PostgreSQL-database** (Database) 
-- **Spring Security** (Authentication) 🔐
-- **Maven** (Build Tool) ⚙️
-- **Spring doc-openapi** (API Documentation)
-- **Hateoas** Links on API calls
+- 🔐 User Registration & Authentication: Secure user signup and login.
+- 🏖️ Personalized Travel Recommendations: Custom travel plans based on user preferences.
+- 🐘 PostgreSQL Database: Stores user data and travel interests.
+- 🔒 Secure Endpoints: Protected with Spring Security for authenticated access.
+- ☕ Java (Spring Boot): Backend framework for application logic.
+- 🗄️ H2 Database: Lightweight, in-memory database for quick testing (Console URL: http://localhost:8080/h2-console , JDBC URL: jdbc:h2:mem:testdb).
+- 🔐 Spring Security: Manages authentication and access control.
+- ⚙️ Maven: Dependency and build management.
+- 📜 Springdoc OpenAPI: Auto-generated API documentation.
+- 🔗 HATEOAS: Adds links to REST API responses for better navigation.
+
 
 ---
 
