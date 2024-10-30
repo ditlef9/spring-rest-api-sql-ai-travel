@@ -1,6 +1,5 @@
 package com.ekeberg.spring_rest_api_sql_ai_travel.exception;
 
-import com.ekeberg.spring_rest_api_sql_ai_travel.user.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

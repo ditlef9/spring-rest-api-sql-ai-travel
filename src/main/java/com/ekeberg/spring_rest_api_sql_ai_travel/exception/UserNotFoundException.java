@@ -1,7 +1,7 @@
 /*
  * src/main/java/com/ekeberg/spring_rest_api_sql_ai_travel/user/UserNotFoundException.java
  */
-package com.ekeberg.spring_rest_api_sql_ai_travel.user;
+package com.ekeberg.spring_rest_api_sql_ai_travel.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

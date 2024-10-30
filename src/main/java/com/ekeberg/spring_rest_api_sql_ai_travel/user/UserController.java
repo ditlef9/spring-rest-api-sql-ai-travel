@@ -4,6 +4,7 @@
  */
 package com.ekeberg.spring_rest_api_sql_ai_travel.user;
 
+import com.ekeberg.spring_rest_api_sql_ai_travel.exception.UserNotFoundException;
 import com.ekeberg.spring_rest_api_sql_ai_travel.utils.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
