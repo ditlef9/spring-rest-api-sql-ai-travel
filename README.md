@@ -5,6 +5,10 @@ The **Smart Travel Planner API** is a Java Spring Boot application designed to h
 trips by suggesting itineraries, attractions, and accommodations based on their travel interests. 
 This API includes user authentication and uses PostgreSQL for data persistence.
 
+
+![Spring REST API SQL AI Travel Workflow](docs/Spring-Rest-Api-SQL-AI-Travel-Workflow.drawio.png)
+
+
 ---
 
 ## ✨ Features
