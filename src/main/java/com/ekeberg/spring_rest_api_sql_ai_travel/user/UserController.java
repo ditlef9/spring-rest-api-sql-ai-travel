@@ -1,29 +1,41 @@
 /*
- * src/main/java/com/ekeberg/spring_rest_api_sql_ai_travel/user/UserJpaResource.java
+ * src/main/java/com/ekeberg/spring_rest_api_sql_ai_travel/user/UserController.java
  * For H2 database
  */
 package com.ekeberg.spring_rest_api_sql_ai_travel.user;
 
+import com.ekeberg.spring_rest_api_sql_ai_travel.utils.JwtUtil;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-public class UserJpaResource {
+public class UserController {
 
+    // Database repositories
     private UserRepository userRepository;
     private InterestRepository interestRepository;
-    public UserJpaResource(UserRepository userRepository, InterestRepository interestRepository){
+
+    // Password encrypter
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    // Constructor
+    public UserController(UserRepository userRepository, InterestRepository interestRepository){
         this.userRepository = userRepository;
         this.interestRepository = interestRepository;
     }
@@ -42,12 +54,6 @@ public class UserJpaResource {
         if(user.isEmpty())
             throw new UserNotFoundException("id:"+id);
 
-        // Filter
-        //MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(user);
-        //SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("password");
-        //FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", filter);
-
-
         // Uses EntityModel to wrap in links
         EntityModel<User> entityModel = EntityModel.of(user.get());
         WebMvcLinkBuilder link =  linkTo(methodOn(this.getClass()).retrieveAllUsers());
@@ -57,23 +63,52 @@ public class UserJpaResource {
     }
 
 
-    // Create user
+    // Create user and return token
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> createUser(@Valid @RequestBody User user) {
+        // Hash the password before saving
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);  // Set the hashed password
+
         User savedUser = userRepository.save(user);
+
+        // Generate JWT token using the user's email as the subject
+        String token = JwtUtil.generateToken(savedUser.getEmail());
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).build();
+        // Prepare response JSON with ID and token
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("id", savedUser.getId());
+        responseBody.put("token", "Bearer " + token);
+
+        return ResponseEntity.created(location).body(responseBody);
     }
 
-    // Delete user
+
+    // Delete user with token validation
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable int id) {
+    public ResponseEntity<String> deleteUser(
+            @PathVariable int id,
+            @RequestHeader("Authorization") String token) {
+
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty())
+            throw new UserNotFoundException("id:" + id);
+
+        // Extract email from token and validate against the user email
+        String userEmail = user.get().getEmail();
+        if (!JwtUtil.validateToken(token.replace("Bearer ", ""), userEmail)) {
+            return ResponseEntity.status(403).body("Invalid or expired token");
+        }
+
+        // If validation is successful, delete the user
         userRepository.deleteById(id);
+        return ResponseEntity.ok("User deleted successfully");
     }
 
 
@@ -90,23 +125,28 @@ public class UserJpaResource {
 
     // Create users interest
     @PostMapping("/users/{id}/interests")
-    public ResponseEntity createInterestForUser(@PathVariable int id, @Valid @RequestBody Interest interest) {
+    public ResponseEntity<?> createInterestForUser(@PathVariable int id, @RequestHeader("Authorization") String token, @Valid @RequestBody Interest interest) {
         Optional<User> user = userRepository.findById(id);
 
-        if(user.isEmpty())
-            throw new UserNotFoundException("id:"+id);
+        if (user.isEmpty())
+            throw new UserNotFoundException("id:" + id);
 
+        // Extract email from token and validate against the user email
+        String userEmail = user.get().getEmail();
+        if (!JwtUtil.validateToken(token.replace("Bearer ", ""), userEmail)) {
+            return ResponseEntity.status(403).body("Invalid or expired token");
+        }
+
+        // Set interest for the user
         interest.setUser(user.get());
         Interest savedInterest = interestRepository.save(interest);
 
-        // URI for interest
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedInterest.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
-
     }
 
 }

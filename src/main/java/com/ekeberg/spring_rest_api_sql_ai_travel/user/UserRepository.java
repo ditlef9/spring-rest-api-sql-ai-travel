@@ -5,8 +5,7 @@ package com.ekeberg.spring_rest_api_sql_ai_travel.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-// Repository to talk to H2 database
-// Can be moved to jpa package
+// Repository to talk to database
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 }

@@ -1,4 +1,4 @@
-package com.ekeberg.spring_rest_api_sql_ai_travel.Setup;
+package com.ekeberg.spring_rest_api_sql_ai_travel.setup;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;

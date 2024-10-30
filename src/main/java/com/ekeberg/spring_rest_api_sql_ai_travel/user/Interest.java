@@ -15,7 +15,7 @@ public class Interest {
 	@GeneratedValue
 	private Integer id;
 	
-	@Size(min = 10)
+	@Size(min = 5)
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.EAGER) // we will not fetch user details when we fetch Interest

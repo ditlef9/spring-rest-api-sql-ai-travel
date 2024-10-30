@@ -54,10 +54,6 @@ some data, or add user and interest manually:<br><br>
 *Add new user:*<br>
 POST http://localhost:8080/users<br>
 
-Authorization (located in `application.properties`):<br>
--> User: user<br>
--> Password: 030de596-3bf7-448a-916a-24cee507d330<br>
-
 Body:<br>
 ```
 {
@@ -77,23 +73,23 @@ ORDER BY user_details.id ASC
 
 This will give you username and their interests:
 
-| User ID | Name               | Interest                    |
-|---------|--------------------|-----------------------------|
-| 1       | Liam Beachman      | Beach relaxation             |
-| 1       | Liam Beachman      | Swimming in the ocean       |
-| 1       | Liam Beachman      | Snorkeling adventures       |
-| 1       | Liam Beachman      | Cruise vacations            |
-| 2       | Emma Safari        | Wildlife safari             |
-| 2       | Emma Safari        | Bird watching               |
-| 2       | Emma Safari        | Camping in nature           |
-| 2       | Emma Safari        | Historical sites            |
-| 3       | Noah Roadtripper   | Road trips                  |
-| 3       | Noah Roadtripper   | Island hopping              |
-| 3       | Noah Roadtripper   | Camping under the stars     |
-| 3       | Noah Roadtripper   | Food and wine tours         |
-| 4       | Olivia Explorer     | Cultural festivals          |
-| 4       | Olivia Explorer     | Scuba diving                |
-| 4       | Olivia Explorer     | Exploring national parks     |
+| User ID | Name             | Interest                 |
+|---------|------------------|--------------------------|
+| 1       | Liam Beachman    | Beach relaxation         |
+| 1       | Liam Beachman    | Swimming in the ocean    |
+| 1       | Liam Beachman    | Snorkeling adventures    |
+| 1       | Liam Beachman    | Cruise vacations         |
+| 2       | Emma Safari      | Wildlife safari          |
+| 2       | Emma Safari      | Bird watching            |
+| 2       | Emma Safari      | Camping in nature        |
+| 2       | Emma Safari      | Historical sites         |
+| 3       | Noah Roadtripper | Road trips               |
+| 3       | Noah Roadtripper | Island hopping           |
+| 3       | Noah Roadtripper | Camping under the stars  |
+| 3       | Noah Roadtripper | Food and wine tours      |
+| 4       | Olivia Explorer  | Cultural festivals       |
+| 4       | Olivia Explorer  | Scuba diving             |
+| 4       | Olivia Explorer  | Exploring national parks |
 
 Now we want to use AI to recommend travel destinations for a user.
 
