@@ -1,6 +1,5 @@
 /*
  * src/main/java/com/ekeberg/spring_rest_api_sql_ai_travel/user/UserController.java
- * For H2 database
  */
 package com.ekeberg.spring_rest_api_sql_ai_travel.user;
 
@@ -24,6 +23,10 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+/**
+ * REST Controller for managing User-related operations.
+ * Provides endpoints for user creation, retrieval, deletion, and interest management.
+ */
 @RestController
 public class UserController {
 
@@ -31,7 +34,7 @@ public class UserController {
     private UserRepository userRepository;
     private InterestRepository interestRepository;
 
-    // Password encrypter
+    // Password encrypter variable
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -87,6 +90,30 @@ public class UserController {
         responseBody.put("token", "Bearer " + token);
 
         return ResponseEntity.created(location).body(responseBody);
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<Map<String, String>> login(@RequestBody SignInRequest loginRequest) {
+        // Retrieve user by email
+        Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid email or password"));
+        }
+
+        User user = userOptional.get();
+
+        // Verify password
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid email or password"));
+        }
+
+        // Generate JWT token
+        String token = JwtUtil.generateToken(user.getEmail());
+
+        // Return token in response
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("token", "Bearer " + token);
+        return ResponseEntity.ok(responseBody);
     }
 
 

@@ -12,9 +12,13 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-// User Bean
+
+/**
+ * Entity class representing a User in the system.
+ * Stores user information including name, email, birth date, password, and interests.
+ */
 // @JsonFilter("UserFilter")
-@Entity(name="user_details")
+@Entity(name="users")
 public class User {
 
     protected User(){
@@ -53,6 +57,7 @@ public class User {
         this.password = password;
     }
 
+    // Getters and setters
     public Integer getId() {
         return id;
     }

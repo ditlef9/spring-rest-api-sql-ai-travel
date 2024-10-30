@@ -8,7 +8,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
-@Entity
+/**
+ * Entity class representing an Interest, associated with a User.
+ * This class is used to store various interests a user might have.
+ */
+@Entity(name="interests")
 public class Interest {
 	
 	@Id
@@ -22,6 +26,7 @@ public class Interest {
 	@JsonIgnore
 	private User user;
 
+	// Getters amd setters
 	public Integer getId() {
 		return id;
 	}
